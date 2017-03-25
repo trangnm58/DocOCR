@@ -21,8 +21,6 @@ class ImageToString(APIView):
         pre = AdvancedPreProcess()
         img = pre.process(img)
         
-        cv2.imwrite('i.png', img)
-        
         viet_ocr = VietOCR()
         try:
             text = viet_ocr.image_to_string(img, lang=language)
