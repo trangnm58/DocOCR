@@ -498,7 +498,7 @@ class PostProcess():
         return word_corrected_text
 
 if __name__ == "__main__":
-    text = "Đường cong B-Spline\nTax có thể định nghiua chúng bằng\n(1) một cách tiếp cận \"dốc sức\" (brute-force) bằng cách giải\nphương trình mô tả những ràng buộc nhất định.\n('2') hàm (\"lũy\") thừa cắt gọn (hàm lũy thừa một phía),\n(3) đệ quy,"
+    text = "Hello, world"
     p = PostProcess()
     res = p.process(text)
     print(res)
