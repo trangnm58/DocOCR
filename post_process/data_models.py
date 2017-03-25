@@ -2,6 +2,7 @@ from __future__ import division, print_function, unicode_literals
 import re
 import json
 import os
+import io
 
 
 # Define paths to data
@@ -14,7 +15,7 @@ word_pairs_filename = os.path.join(module_dir, 'data/word_pairs.json')
 
 class BigramModel():
     def __init__(self):
-        with open(bigram_filename, 'r', encoding='utf8') as f:
+        with io.open(bigram_filename, 'r', encoding='utf8') as f:
             self.bigram = json.loads(f.read(), encoding='utf8')
 
     def count(self, word1, word2):
@@ -28,7 +29,7 @@ class BigramModel():
 
 class UnigramModel():
     def __init__(self):
-        with open(unigram_filename, 'r', encoding='utf8') as f:
+        with io.open(unigram_filename, 'r', encoding='utf8') as f:
             self.unigram = json.loads(f.read(), encoding='utf8')
 
     def count(self, word1, word2):
@@ -45,7 +46,7 @@ class UnigramModel():
 class Dict():
     def __init__(self):
         # read dictionary file => list of strings
-        with open(dict_filename, "r", encoding='utf8') as f:
+        with io.open(dict_filename, "r", encoding='utf8') as f:
             self.dict = ' '.join(f.read().split())
     
     def is_in_dict(self, word):
@@ -54,7 +55,7 @@ class Dict():
 
 class WordPairs():
     def __init__(self):
-        with open(word_pairs_filename, "r", encoding='utf8') as f:
+        with io.open(word_pairs_filename, "r", encoding='utf8') as f:
             self.word_pairs = json.loads(f.read(), encoding='utf8')
         
         self.before = self.word_pairs['before']
