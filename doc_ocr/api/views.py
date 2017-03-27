@@ -10,6 +10,10 @@ from post_process.models import PostProcess
 
 
 class ImageToString(APIView):
+    def get(self, request):
+        # test django
+        return Response(status=status.HTTP_200_OK)
+        
     def post(self, request):
         img = request.data.get('image')
         language = request.data.get('lang')
