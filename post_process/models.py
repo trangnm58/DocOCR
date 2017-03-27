@@ -24,8 +24,8 @@ class TextProcessor():
     Separate the raw text into paragraphs and tokenize each paragraphs
     """
     def __init__(self):
-        self.before_marks = ['(', '[', '{', '<', '“', '«', '‘', '‹']
-        self.after_marks = [')', ']', '}', '>', '”', '»', '’', '›', '?', '.', ',', ';', '!', ':']
+        self.before_marks = ['(', '[', '{', '<', '“', '«', '‘', '‹', '"', "'"]
+        self.after_marks = [')', ']', '}', '>', '”', '»', '’', '›', '?', '.', ',', ';', '!', ':', '"', "'"]
         
     def process(self, text):
         paragraphs = self._split_paragraphs(text)  # list of strings
@@ -271,7 +271,10 @@ class WordDiacriticCorrector():
             if score > best_score:
                 best_score = score
                 best_word = word_list[i]
-        return True, best_word
+        if best_word != word:
+            return True, best_word
+        else:
+            return False, None
 
     def _fix_tokenized_paragraphs(self, direction=1):
         fix_tokenized_paragraphs = []
@@ -376,12 +379,20 @@ class WordCorrector():
                 if len(p[i][idx]) <= 1:  # word is too short to carry on
                     continue
                 
-                if not DICT.is_in_dict(p[i][idx]):   # middle token of p[i] needs replacing
+                if not DICT.is_in_dict(p[i][idx]):  # middle token of p[i] needs replacing
                     # find max allow distance
                     word_len = len(p[i][idx])
                     max_dist = int(word_len / 2)
                     
                     letters_only = self._filter_letters_only(p[i][idx])
+                    if len(letters_only) == 0:
+                        # does not contain any letter
+                        continue
+                    
+                    if (len(letters_only) == word_len and p[i][idx].istitle()) or p[i][idx].isupper():
+                        # maybe some personal name or code
+                        continue
+                    
                     word_list = self._get_word_list(p, i, word_state)
                     
                     best_word = self._get_nearest_word(letters_only, word_list, max_dist)

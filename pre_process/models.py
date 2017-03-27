@@ -29,7 +29,7 @@ CUBIC_IDX = slice(6, 8)  # index of cubic slopes in params vector
 
 SPAN_MIN_WIDTH = 30  # minimum reduced px width for span
 SPAN_PX_PER_STEP = 50  # reduced px spacing for sampling along spans
-FOCAL_LENGTH = 1.2  # normalized focal length of camera
+FOCAL_LENGTH = 2.0  # normalized focal length of camera
 
 # default intrinsic parameter matrix
 K = np.array([
